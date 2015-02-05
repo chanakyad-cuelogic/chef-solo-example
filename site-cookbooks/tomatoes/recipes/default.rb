@@ -1,21 +1,11 @@
-package "git"
+package "git" 
 
-directory node.app.web_dir do
-	owner node.user.name
-	mode "0755"
-	recursive true
-end
-
-directory "#{node.app.web_dir}/public" do
-	owner node.user.name
-	mode "0755"
-	recursive true
-end
-
-directory "#{node.app.web_dir}/logs" do
-	owner node.user.name
-	mode "0755"
-	recursive true
+%w(public logs).each do |dir|
+	directory "#{node.app.web_dir}/#{dir}" do
+		owner node.user.name
+		mode "0755"
+		recursive true
+	end
 end
 
 template "#{node.nginx.dir}/sites-available/#{node.app.name}.conf" do
